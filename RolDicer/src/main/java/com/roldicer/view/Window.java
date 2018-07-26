@@ -22,39 +22,47 @@ import javax.swing.ButtonGroup;
  * @author Fernando Pérez Gutiérrez <fernaperg@gmail.com>
  */
 public class Window extends javax.swing.JFrame {
-    
-    private Controller controller;
+
+    private final Controller controller;
     private ResourceBundle bundle;
-    
+    private String language;
+
     private ButtonGroup group;
-    
-    /**
-     * Creates new form Window
-     */
-    public Window() {
-        initComponents();
-    }
 
     public Window(Controller controller) {
         this.controller = controller;
-        this.bundle = Controller.readBundle("es_Es");
+        this.language = "";
+        //this.bundle = Controller.readBundle(this.language);
         initComponents();
-        updateLanguage();
-        
+        updateLanguage("es_Es");
+        this.language = "es_Es";
+
         this.group = new ButtonGroup();
         this.group.add(esEs);
         this.group.add(enEn);
     }
-    
-    private void updateLanguage() {
-        if (this.bundle == null)
+
+    private void updateLanguage(String language) {
+        if (this.language.equals(language)) {
             return;
+        }
+
+        ResourceBundle bndl = Controller.readBundle(language);
+
+        if (bndl == null) {
+            return;
+        }
+
+        this.bundle = bndl;
+        this.language = language;
+
         this.setTitle(Controller.TITLE + " - " + this.bundle.getString("Idiom"));
-        jMenu1.setText(this.bundle.getString("File"));
-        jMenu2.setText(this.bundle.getString("Edit"));
-        selectLanguage.setText(this.bundle.getString("Language"));
-        createTemplate.setText(this.bundle.getString("CreateTemplate"));
-        loadTemplate.setText(this.bundle.getString("LoadTemplate"));
+        this.jMenu1.setText(this.bundle.getString("File"));
+        this.jMenu2.setText(this.bundle.getString("Edit"));
+        this.selectLanguage.setText(this.bundle.getString("Language"));
+        this.createTemplate.setText(this.bundle.getString("CreateTemplate"));
+        this.editTemplate.setText(this.bundle.getString("EditTemplate"));
+        this.loadFile.setText(this.bundle.getString("LoadFile"));
     }
 
     /**
@@ -68,7 +76,8 @@ public class Window extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         createTemplate = new javax.swing.JButton();
-        loadTemplate = new javax.swing.JButton();
+        editTemplate = new javax.swing.JButton();
+        loadFile = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         selectLanguage = new javax.swing.JMenu();
@@ -89,10 +98,12 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
-        loadTemplate.setText("Load Template");
-        loadTemplate.setMaximumSize(new java.awt.Dimension(133, 23));
-        loadTemplate.setMinimumSize(new java.awt.Dimension(133, 23));
-        loadTemplate.setPreferredSize(new java.awt.Dimension(133, 23));
+        editTemplate.setText("Edit Template");
+        editTemplate.setMaximumSize(new java.awt.Dimension(133, 23));
+        editTemplate.setMinimumSize(new java.awt.Dimension(133, 23));
+        editTemplate.setPreferredSize(new java.awt.Dimension(133, 23));
+
+        loadFile.setText("Load File");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -100,9 +111,10 @@ public class Window extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(createTemplate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loadTemplate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(createTemplate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editTemplate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loadFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -111,8 +123,9 @@ public class Window extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(createTemplate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(loadTemplate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addComponent(editTemplate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(loadFile))
         );
 
         getContentPane().add(jPanel1, new java.awt.GridBagConstraints());
@@ -152,29 +165,28 @@ public class Window extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void esEsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esEsActionPerformed
-        this.bundle = Controller.readBundle("es_Es");
-        updateLanguage();
+        updateLanguage("es_Es");
     }//GEN-LAST:event_esEsActionPerformed
 
     private void enEnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enEnActionPerformed
-        this.bundle = Controller.readBundle("en_En");
-        updateLanguage();
+        updateLanguage("en_En");
     }//GEN-LAST:event_enEnActionPerformed
 
     private void createTemplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createTemplateActionPerformed
-        controller.setNewTemplate(new NewTemplate(controller));
+        controller.setNewTemplate(new NewTemplate(this.controller, this.language));
         controller.clearView();
     }//GEN-LAST:event_createTemplateActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createTemplate;
+    private javax.swing.JButton editTemplate;
     private javax.swing.JRadioButtonMenuItem enEn;
     private javax.swing.JRadioButtonMenuItem esEs;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton loadTemplate;
+    private javax.swing.JButton loadFile;
     private javax.swing.JMenu selectLanguage;
     // End of variables declaration//GEN-END:variables
 }

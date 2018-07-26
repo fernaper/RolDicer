@@ -14,11 +14,13 @@
 package com.roldicer.controller;
 
 import com.roldicer.view.Window;
+
 /**
  *
  * @author Fernando Pérez Gutiérrez <fernaperg@gmail.com>
  */
-public class Main {    
+public class Main {
+
     public static void main(String[] args) {
         Controller controller = new Controller();
         Window window = new Window(controller);

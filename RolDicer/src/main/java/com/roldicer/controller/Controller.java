@@ -31,46 +31,48 @@ public class Controller {
     public static final String TITLE = "RolDicer";
     private Window window;
     private NewTemplate newTemplate;
-    
+
     public Controller() {
-        
+
     }
-    
+
     public static ResourceBundle readBundle(String lang) {
         FileInputStream fis;
         try {
-            fis = new FileInputStream("src/main/resources/idioms/"+lang+".properties");
+            fis = new FileInputStream("src/main/resources/idioms/" + lang + ".properties");
         } catch (FileNotFoundException ex) {
             return null;
         }
-        
+
         ResourceBundle bundle;
         try {
             bundle = new PropertyResourceBundle(fis);
         } catch (IOException ex) {
             return null;
         }
-        
+
         return bundle;
     }
-    
+
     public void setWindow(Window window) {
         this.window = window;
         this.window.setMinimumSize(new Dimension(300, 300));
         this.window.setVisible(true);
         this.window.setLocationRelativeTo(null);
     }
-    
+
     public void clearView() {
-        this.window.dispose();
+        if (this.window != null) {
+            this.window.dispose();
+        }
         this.window = null;
     }
 
     public void setNewTemplate(NewTemplate newTemplate) {
         this.newTemplate = newTemplate;
-        this.newTemplate.setMinimumSize(new Dimension(300, 300));
+        this.newTemplate.setMinimumSize(new Dimension(795, 530));
         this.newTemplate.setVisible(true);
         this.newTemplate.setLocationRelativeTo(null);
     }
-    
+
 }

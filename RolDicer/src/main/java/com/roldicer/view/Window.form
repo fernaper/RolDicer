@@ -79,9 +79,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="createTemplate" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="loadTemplate" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="createTemplate" alignment="0" max="32767" attributes="0"/>
+                      <Component id="editTemplate" alignment="0" max="32767" attributes="0"/>
+                      <Component id="loadFile" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -93,8 +94,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="createTemplate" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="loadTemplate" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="21" max="32767" attributes="0"/>
+                  <Component id="editTemplate" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="loadFile" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -117,9 +119,9 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createTemplateActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="loadTemplate">
+        <Component class="javax.swing.JButton" name="editTemplate">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Load Template"/>
+            <Property name="text" type="java.lang.String" value="Edit Template"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[133, 23]"/>
             </Property>
@@ -129,6 +131,11 @@
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[133, 23]"/>
             </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="loadFile">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Load File"/>
           </Properties>
         </Component>
       </SubComponents>
