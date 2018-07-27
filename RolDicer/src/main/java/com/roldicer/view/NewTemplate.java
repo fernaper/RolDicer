@@ -14,6 +14,12 @@
 package com.roldicer.view;
 
 import com.roldicer.controller.Controller;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import javax.swing.JButton;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
  *
@@ -21,11 +27,31 @@ import com.roldicer.controller.Controller;
  */
 public class NewTemplate extends javax.swing.JFrame {
 
+    private Component selected;
+    private int widthSelected;
+    private int heightSelected;
+
+    private Controller controller;
+    private String language;
+
     /**
      * Creates new form NewTemplate
+     *
+     * @param controller
+     * @param language
      */
     public NewTemplate(Controller controller, String language) {
+        this.controller = controller;
+        this.language = language;
         initComponents();
+    }
+
+    public NewTemplate() {
+        initComponents();
+    }
+
+    public void addButton(JButton jbutton) {
+        this.jPanel2.add(jbutton);
     }
 
     /**
@@ -40,6 +66,7 @@ public class NewTemplate extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        dadoTemplate = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -47,30 +74,42 @@ public class NewTemplate extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 539, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
-        );
+        jPanel2.setMaximumSize(new java.awt.Dimension(1280, 720));
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel2MouseClicked(evt);
+            }
+        });
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setPreferredSize(new java.awt.Dimension(230, 2));
+
+        dadoTemplate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/button.png"))); // NOI18N
+        dadoTemplate.setBorder(null);
+        dadoTemplate.setContentAreaFilled(false);
+        dadoTemplate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        dadoTemplate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dadoTemplateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 228, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dadoTemplate)
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dadoTemplate)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -105,9 +144,9 @@ public class NewTemplate extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -133,7 +172,31 @@ public class NewTemplate extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void dadoTemplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dadoTemplateActionPerformed
+        this.selected = Generator.button();
+    }//GEN-LAST:event_dadoTemplateActionPerformed
+
+    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+        Dimension d = Generator.dimButton();
+
+        if (this.selected == null
+                || evt.getX() - (int) (d.getWidth() / 2) < 0
+                || evt.getY() - (int) (d.getHeight() / 2) < 0) {
+            return;
+        }
+
+        this.jPanel2.add(this.selected, new AbsoluteConstraints((int) (evt.getX() - (d.getWidth() / 2)), (int) (evt.getY() - (d.getHeight() / 2)), -1, -1));
+        this.selected = null;
+        
+        Dimension minSize = this.jPanel2.getMinimumSize();
+        this.setMinimumSize(new Dimension(Math.max(800, (int) minSize.getWidth() + 259), Math.max(620, (int) minSize.getHeight() + 108)));
+        this.jPanel2.revalidate();
+        this.jPanel2.repaint();
+
+    }//GEN-LAST:event_jPanel2MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton dadoTemplate;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

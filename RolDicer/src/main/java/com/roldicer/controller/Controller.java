@@ -70,7 +70,7 @@ public class Controller {
 
     public void setNewTemplate(NewTemplate newTemplate) {
         this.newTemplate = newTemplate;
-        this.newTemplate.setMinimumSize(new Dimension(800, 500));
+        this.newTemplate.setMinimumSize(new Dimension(800, 620));
         this.newTemplate.setVisible(true);
         this.newTemplate.setLocationRelativeTo(null);
     }

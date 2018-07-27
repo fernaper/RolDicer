@@ -15,7 +15,12 @@ package com.roldicer.view;
 
 import java.util.ResourceBundle;
 import com.roldicer.controller.Controller;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -102,6 +107,11 @@ public class Window extends javax.swing.JFrame {
         editTemplate.setMaximumSize(new java.awt.Dimension(133, 23));
         editTemplate.setMinimumSize(new java.awt.Dimension(133, 23));
         editTemplate.setPreferredSize(new java.awt.Dimension(133, 23));
+        editTemplate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editTemplateActionPerformed(evt);
+            }
+        });
 
         loadFile.setText("Load File");
 
@@ -176,6 +186,10 @@ public class Window extends javax.swing.JFrame {
         controller.setNewTemplate(new NewTemplate(this.controller, this.language));
         controller.clearView();
     }//GEN-LAST:event_createTemplateActionPerformed
+
+    private void editTemplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTemplateActionPerformed
+        
+    }//GEN-LAST:event_editTemplateActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createTemplate;
