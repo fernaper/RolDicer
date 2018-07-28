@@ -13,6 +13,7 @@
  */
 package com.roldicer.controller;
 
+import com.roldicer.model.Template;
 import com.roldicer.view.NewTemplate;
 import com.roldicer.view.Window;
 import java.awt.Dimension;
@@ -31,9 +32,10 @@ public class Controller {
     public static final String TITLE = "RolDicer";
     private Window window;
     private NewTemplate newTemplate;
+    private Template fullTemplate;
 
     public Controller() {
-
+        this.fullTemplate = new Template();
     }
 
     public static ResourceBundle readBundle(String lang) {

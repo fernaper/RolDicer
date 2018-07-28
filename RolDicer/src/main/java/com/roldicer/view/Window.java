@@ -15,12 +15,7 @@ package com.roldicer.view;
 
 import java.util.ResourceBundle;
 import com.roldicer.controller.Controller;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  *
@@ -32,7 +27,7 @@ public class Window extends javax.swing.JFrame {
     private ResourceBundle bundle;
     private String language;
 
-    private ButtonGroup group;
+    private final ButtonGroup group;
 
     public Window(Controller controller) {
         this.controller = controller;

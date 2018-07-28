@@ -18,6 +18,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.util.ResourceBundle;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
@@ -33,6 +35,9 @@ public class NewTemplate extends javax.swing.JFrame {
 
     private Controller controller;
     private String language;
+    private ResourceBundle bundle;
+
+    private final ButtonGroup group;
 
     /**
      * Creates new form NewTemplate
@@ -42,12 +47,43 @@ public class NewTemplate extends javax.swing.JFrame {
      */
     public NewTemplate(Controller controller, String language) {
         this.controller = controller;
-        this.language = language;
+        this.language = "";
         initComponents();
+        updateLanguage(language);
+        this.language = language;
+        this.group = new ButtonGroup();
+        this.group.add(esEs);
+        this.group.add(enEn);
     }
 
     public NewTemplate() {
         initComponents();
+        this.language = "";
+        updateLanguage("es_Es");
+        this.language = "es_Es";
+        this.group = new ButtonGroup();
+        this.group.add(esEs);
+        this.group.add(enEn);
+    }
+
+    private void updateLanguage(String language) {
+        if (this.language.equals(language)) {
+            return;
+        }
+
+        ResourceBundle bndl = Controller.readBundle(language);
+
+        if (bndl == null) {
+            return;
+        }
+
+        this.bundle = bndl;
+        this.language = language;
+
+        this.setTitle(Controller.TITLE + " - " + this.bundle.getString("Idiom"));
+        this.jMenu1.setText(this.bundle.getString("File"));
+        this.jMenu2.setText(this.bundle.getString("Edit"));
+        this.selectLanguage.setText(this.bundle.getString("Language"));
     }
 
     public void addButton(JButton jbutton) {
@@ -68,6 +104,12 @@ public class NewTemplate extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         dadoTemplate = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        selectLanguage = new javax.swing.JMenu();
+        esEs = new javax.swing.JRadioButtonMenuItem();
+        enEn = new javax.swing.JRadioButtonMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,13 +186,44 @@ public class NewTemplate extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
+
+        jMenu1.setText("File");
+
+        selectLanguage.setText("Language");
+
+        esEs.setSelected(true);
+        esEs.setText("Español");
+        esEs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                esEsActionPerformed(evt);
+            }
+        });
+        selectLanguage.add(esEs);
+
+        enEn.setSelected(true);
+        enEn.setText("English");
+        enEn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enEnActionPerformed(evt);
+            }
+        });
+        selectLanguage.add(enEn);
+
+        jMenu1.add(selectLanguage);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,7 +260,7 @@ public class NewTemplate extends javax.swing.JFrame {
 
         this.jPanel2.add(this.selected, new AbsoluteConstraints((int) (evt.getX() - (d.getWidth() / 2)), (int) (evt.getY() - (d.getHeight() / 2)), -1, -1));
         this.selected = null;
-        
+
         Dimension minSize = this.jPanel2.getMinimumSize();
         this.setMinimumSize(new Dimension(Math.max(800, (int) minSize.getWidth() + 259), Math.max(620, (int) minSize.getHeight() + 108)));
         this.jPanel2.revalidate();
@@ -195,11 +268,25 @@ public class NewTemplate extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jPanel2MouseClicked
 
+    private void esEsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esEsActionPerformed
+        updateLanguage("es_Es");
+    }//GEN-LAST:event_esEsActionPerformed
+
+    private void enEnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enEnActionPerformed
+        updateLanguage("en_En");
+    }//GEN-LAST:event_enEnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton dadoTemplate;
+    private javax.swing.JRadioButtonMenuItem enEn;
+    private javax.swing.JRadioButtonMenuItem esEs;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JMenu selectLanguage;
     // End of variables declaration//GEN-END:variables
 }

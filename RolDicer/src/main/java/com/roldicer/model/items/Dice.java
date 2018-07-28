@@ -13,8 +13,7 @@
  */
 package com.roldicer.model.items;
 
-import com.roldicer.view.Generator;
-import javax.swing.JButton;
+import java.awt.Dimension;
 
 /**
  *
@@ -22,15 +21,17 @@ import javax.swing.JButton;
  */
 public class Dice extends Item {
     
-    private JButton button;
     private boolean editable;
     
     public Dice() {
         this.editable = true;
-        this.button = Generator.button();
-        this.button.addActionListener((java.awt.event.ActionEvent evt) -> {
-           performAction(); 
-        });
+        this.position = new Dimension(0,0);
+        this.size = new Dimension(20,20);
+    }
+    
+    public Dice(Dimension position, Dimension size) {
+        this.position = position;
+        this.size = size;
     }
 
     @Override
